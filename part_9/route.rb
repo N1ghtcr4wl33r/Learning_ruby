@@ -1,9 +1,13 @@
+require_relative 'instance_counter'
+
 class Route
+  include InstanceCounter
+
   attr_reader :stations, :station_first, :station_last
+
   def initialize(station_first, station_last)
-
     @stations = [station_first, station_last]
-
+    register_instance
   end
 
   def add_station_middle(station)
@@ -19,14 +23,13 @@ class Route
   end
 
   def to_s
-    name_list = stations.map { |station| station.name }
-    name_list.join(" - ")
+    name_list = stations.map(&:name)
+    name_list.join(' - ')
   end
 
   private
 
-  #доступ к изменению промежуточных станций вне класса нежелателен
+  # доступ к изменению промежуточных станций вне класса нежелателен
 
   attr_writer :stations
-
 end

@@ -5,37 +5,35 @@ class Train
     @number = number
     @wagons = []
     @current_speed = 0
-    @type = nil
-    @current_station = nil
   end
 
   def wagon_count
     wagons.length
   end
 
-  def pin_wagons(wagon)
+  def pin_wagon(wagon)
     wagons.push(wagon) if (current_speed == 0) && (wagon.type == type)
   end
 
-  def unpin_wagons
+  def unpin_wagon
     if (current_speed == 0) && (wagon_count > 0)
       wagons.pop
-      puts "Вагон отцеплен"
+      puts "Вагон отцеплен от поезда с номером '#{number}'"
     else
-      puts "Число вагонов поезда равно 0"
+      puts "Для удаления вагона необходимо, чтобы к поезду был прицеплен как минимум один вагон"
     end
   end
 
   def take_route(route)
     self.route = route
-    route.station_name_first.accept_train(self)
-    self.current_station = route.station_name_first
+    route.stations.first.accept_train(self)
+    self.current_station = route.stations.first
 
   end
 
   def route_name
     if !route.nil?
-      "#{route.station_name_first.name} - #{route.station_name_last.name}"
+      "#{route.stations.first.name} - #{route.stations.last.name}"
     else
       "Маршрут не построен"
     end
@@ -78,22 +76,22 @@ class Train
   end
 
   def index_station
-    route.station_list.to_s[current_station]
+    route.stations.to_s[current_station]
   end
 
   def index_station_prev
-    index = route.station_list.find_index(current_station)
+    index = route.stations.find_index(current_station)
     if index > 0
-      route.station_list[index - 1]
+      route.stations[index - 1]
     else
       puts "Эта станция первая в маршруте"
     end
   end
 
   def index_station_next
-    index = route.station_list.find_index(current_station)
-    if index < route.station_list.length - 1
-      route.station_list[index + 1]
+    index = route.stations.find_index(current_station)
+    if index < route.stations.length - 1
+      route.stations[index + 1]
     else
       puts "Эта станция последняя в маршруте"
     end
@@ -110,4 +108,3 @@ class Train
   attr_writer :route, :current_speed, :current_station
 
 end
-

@@ -134,8 +134,10 @@ class Train
   end
 
   def validate!
-    raise "Неправильный тип поезда. Используйте команды ':passenger' или ':cargo'" if @type !~ SAMPLER_TYPE
-    raise "Неправильный формат номера поезда. Используйте ***-** или *****" if @number !~ SAMPLER_NUMBER
+    errors = []
+    errors << "Неправильный тип поезда. Используйте команды ':passenger' или ':cargo'" if @type !~ SAMPLER_TYPE
+    errors << "Неправильный формат номера поезда. Используйте ***-** или *****" if @number !~ SAMPLER_NUMBER
+  raise errors.join(".") unless errors.empty?
   end
 
   private

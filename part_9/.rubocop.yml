@@ -1,0 +1,31 @@
+AllCops:
+  NewCops: enable
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/ClassVars:
+  Enabled: false
+  
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Max: 18 
+
+Metrics/PerceivedComplexity:
+  Max: 9
+
+Layout/LineLength:
+  Max: 150
+  
+ 

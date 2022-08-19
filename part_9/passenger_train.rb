@@ -1,10 +1,8 @@
 require_relative 'train'
-class CargoTrain < Train
+class PassengerTrain < Train
   attr_reader :type
 
   def initialize(number)
-    super(number)
-    @type = :cargo
+    super(number, :passenger)
   end
-
 end

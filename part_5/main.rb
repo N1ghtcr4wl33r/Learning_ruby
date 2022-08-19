@@ -56,9 +56,9 @@ class Railroad
       when "6"
         take_route_train
       when "7"
-        pin_wagon
+        pin_wagon_train
       when "8"
-        unpin_wagon
+        unpin_wagon_train
       when "9"
         station_next
       when "10"
@@ -95,39 +95,39 @@ class Railroad
 
     routes["Весенняя - Щербинка"] = Route.new(stations["Весенняя"], stations["Щербинка"])
     routes["Чехов - Весенняя"] = Route.new(stations["Чехов"], stations["Весенняя"])
-    routes["Весенняя - Щербинка"].add_station_name_middle(stations["Кутузовская"])
-    routes["Весенняя - Щербинка"].add_station_name_middle(stations["Подольск"])
-    routes["Весенняя - Щербинка"].add_station_name_middle(stations["Силикатная"])
-    routes["Чехов - Весенняя"].add_station_name_middle(stations["Чепелёво"])
-    routes["Чехов - Весенняя"].add_station_name_middle(stations["Пл. 66 км"])
-    routes["Чехов - Весенняя"].add_station_name_middle(stations["Столбовая"])
-    routes["Чехов - Весенняя"].add_station_name_middle(stations["Молоди"])
-    routes["Чехов - Весенняя"].add_station_name_middle(stations["Львовская"])
-    routes["Чехов - Весенняя"].add_station_name_middle(stations["Гривно"])
+    routes["Весенняя - Щербинка"].add_station_middle(stations["Кутузовская"])
+    routes["Весенняя - Щербинка"].add_station_middle(stations["Подольск"])
+    routes["Весенняя - Щербинка"].add_station_middle(stations["Силикатная"])
+    routes["Чехов - Весенняя"].add_station_middle(stations["Чепелёво"])
+    routes["Чехов - Весенняя"].add_station_middle(stations["Пл. 66 км"])
+    routes["Чехов - Весенняя"].add_station_middle(stations["Столбовая"])
+    routes["Чехов - Весенняя"].add_station_middle(stations["Молоди"])
+    routes["Чехов - Весенняя"].add_station_middle(stations["Львовская"])
+    routes["Чехов - Весенняя"].add_station_middle(stations["Гривно"])
 
-    trains["П-765"].pin_wagons(PassengerWagon.new)
-    trains["П-765"].pin_wagons(PassengerWagon.new)
-    trains["П-765"].pin_wagons(PassengerWagon.new)
-    trains["П-765"].pin_wagons(PassengerWagon.new)
-    trains["Г-3325"].pin_wagons(CargoWagon.new)
-    trains["Г-3325"].pin_wagons(CargoWagon.new)
-    trains["Г-3872"].pin_wagons(CargoWagon.new)
-    trains["Г-3872"].pin_wagons(CargoWagon.new)
-    trains["Г-3872"].pin_wagons(CargoWagon.new)
-    trains["Г-3872"].pin_wagons(CargoWagon.new)
-    trains["Г-3872"].pin_wagons(CargoWagon.new)
-    trains["Г-3872"].pin_wagons(CargoWagon.new)
-    trains["Г-3872"].pin_wagons(CargoWagon.new)
-    trains["П-711"].pin_wagons(PassengerWagon.new)
-    trains["П-711"].pin_wagons(PassengerWagon.new)
-    trains["П-711"].pin_wagons(PassengerWagon.new)
-    trains["П-711"].pin_wagons(PassengerWagon.new)
-    trains["П-711"].pin_wagons(PassengerWagon.new)
-    trains["П-711"].pin_wagons(PassengerWagon.new)
-    trains["П-711"].pin_wagons(PassengerWagon.new)
-    trains["П-711"].pin_wagons(PassengerWagon.new)
-    trains["П-711"].pin_wagons(PassengerWagon.new)
-    trains["П-711"].pin_wagons(PassengerWagon.new)
+    trains["П-765"].pin_wagon(PassengerWagon.new)
+    trains["П-765"].pin_wagon(PassengerWagon.new)
+    trains["П-765"].pin_wagon(PassengerWagon.new)
+    trains["П-765"].pin_wagon(PassengerWagon.new)
+    trains["Г-3325"].pin_wagon(CargoWagon.new)
+    trains["Г-3325"].pin_wagon(CargoWagon.new)
+    trains["Г-3872"].pin_wagon(CargoWagon.new)
+    trains["Г-3872"].pin_wagon(CargoWagon.new)
+    trains["Г-3872"].pin_wagon(CargoWagon.new)
+    trains["Г-3872"].pin_wagon(CargoWagon.new)
+    trains["Г-3872"].pin_wagon(CargoWagon.new)
+    trains["Г-3872"].pin_wagon(CargoWagon.new)
+    trains["Г-3872"].pin_wagon(CargoWagon.new)
+    trains["П-711"].pin_wagon(PassengerWagon.new)
+    trains["П-711"].pin_wagon(PassengerWagon.new)
+    trains["П-711"].pin_wagon(PassengerWagon.new)
+    trains["П-711"].pin_wagon(PassengerWagon.new)
+    trains["П-711"].pin_wagon(PassengerWagon.new)
+    trains["П-711"].pin_wagon(PassengerWagon.new)
+    trains["П-711"].pin_wagon(PassengerWagon.new)
+    trains["П-711"].pin_wagon(PassengerWagon.new)
+    trains["П-711"].pin_wagon(PassengerWagon.new)
+    trains["П-711"].pin_wagon(PassengerWagon.new)
 
     trains["П-765"].take_route(routes["Весенняя - Щербинка"])
     trains["Г-3325"].take_route(routes["Весенняя - Щербинка"])
@@ -145,7 +145,7 @@ class Railroad
 
   def station_new
     puts "Введите название станции:"
-    name = gets.chomp.capitalize
+    name = gets.capitalize.chomp
     if stations[name].nil?
       stations[name] = Station.new(name)
       puts "Добавлена станция '#{name}'"
@@ -187,16 +187,16 @@ class Railroad
   end
 
   def route_new
-    station_name_first = select_station("Выбор начальной станции")
-    return break_input if station_name_first.nil?
+    station_first = select_station("Выбор начальной станции")
+    return break_input if station_first.nil?
 
-    available_stations = stations_name_list - [station_name_first.name]
+    available_stations = stations_name_list - [station_first.name]
 
-    station_name_last = select_station("Выбор конечной станции", available_stations)
-    return break_input if station_name_last.nil?
+    station_last = select_station("Выбор конечной станции", available_stations)
+    return break_input if station_last.nil?
 
-    route_name = "#{station_name_first.name} - #{station_name_last.name}"
-    routes[route_name] = Route.new(station_name_first, station_name_last)
+    route_name = "#{station_first.name} - #{station_last.name}"
+    routes[route_name] = Route.new(station_first, station_last)
     puts "Добавлен маршрут '#{route_name}'"
   end
 
@@ -204,12 +204,12 @@ class Railroad
     route = route_input
     return break_input if route.nil?
 
-    exception = route.station_list.map {|station| station.name}
+    exception = route.stations.map {|station| station.name}
     available_stations = stations_name_list - exception
     station = select_station("Выбор промежуточной станции", available_stations)
     return break_input if station.nil?
 
-    route.add_station_name_middle(station)
+    route.add_station_middle(station)
     puts "Станция '#{station.name}' добавлена. Текущий маршрут: " + route.to_s
   end
 
@@ -217,12 +217,12 @@ class Railroad
     route = route_input
     return break_input if route.nil?
 
-    exception = route.stations.map {|station| station.name}
+    exception = route.station_list.map {|station| station.name}
     available_stations = exception
     station = select_station("Выбор промежуточной станции", available_stations)
     return break_input if station.nil?
 
-    route.remove_station_name_middle(station)
+    route.remove_station_middle(station)
     puts "Станция '#{station.name}' удалена. Текущий маршрут: " + route.to_s
   end
 
@@ -238,31 +238,27 @@ class Railroad
     puts "Для поезда номер '#{train.number}' присвоен маршрут '#{train.route_name}'"
   end
 
-  def pin_wagon
+  def pin_wagon_train
     train = train_input
     return break_input if train.nil?
 
     case train.type
     when :passenger
-      train.pin_wagons(PassengerWagon.new)
+      train.pin_wagon(PassengerWagon.new)
     when :cargo
-      train.pin_wagons(CargoWagon.new)
+      train.pin_wagon(CargoWagon.new)
     end
 
     puts "Вагон добавлен к поезду с номером '#{train.number}'"
+
   end
 
-  def unpin_wagon
+  def unpin_wagon_train
     train = train_input
     return break_input if train.nil?
 
-    train.unpin_wagons
+    train.unpin_wagon
 
-    if train.wagon_count.zero?
-      puts "Для удаления вагона необходимо, чтобы к поезду был прицеплен как минимум один вагон"
-    else
-      puts "Вагон отцеплен от поезда с номером '#{train.number}'"
-    end
   end
 
   def station_next
@@ -275,7 +271,7 @@ class Railroad
 
     if station != current_station
       puts "Поезд номер '#{train.number}' перемещен на станцию '#{current_station.name}'"
-      puts "Эта станция последняя в маршруте" if train.current_station == train.route.station_name_last
+      puts "Эта станция последняя в маршруте" if train.current_station == train.route.station_last
     else
       puts "Поезд номер '#{train.number}' находится на станции ''#{station.name}', станция конечная"
     end
@@ -291,7 +287,7 @@ class Railroad
 
     if station != current_station
       puts "Поезд номер '#{train.number}' перемещен на станцию '#{current_station.name}'"
-      puts "Эта станция первая в маршруте" if train.current_station == train.route.station_name_first
+      puts "Эта станция первая в маршруте" if train.current_station == train.route.station_first
     else
       puts "Поезд номер '#{train.number}' находится на станции '#{station.name}', эта станция первая в маршруте"
     end
